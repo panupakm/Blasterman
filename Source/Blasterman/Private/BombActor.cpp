@@ -37,6 +37,9 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	FVector start = GetActorLocation();
 	FVector end = GetActorLocation() + dirRotator.Vector()*MaxBlastDistance;
 
+	//UE_LOG(LogTemp, Warning, TEXT("Actor Rotator(%s) Vector(%s) MaxBlastDistance(%f) BlastRadius(%f)"), *dirRotator.ToString(), *dirRotator.Vector().ToString(), MaxBlastDistance, BlastRadius);
+	//UE_LOG(LogTemp, Warning, TEXT("Start(%s) End(%s)"), *start.ToString(), *end.ToString());
+
 	FCollisionQueryParams queryParams = FCollisionQueryParams( "Blast", true, this);
 
 	TArray<TEnumAsByte<EObjectTypeQuery>> objectTypes;
@@ -47,7 +50,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	bool hasHits = false;
 	GetWorld()->SweepMultiByObjectType(outHits, start, end, FQuat(0, 0, 0, 1), 
 		objectQueryParams, collisionShape, queryParams);
-	DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 2.0f);
+	DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 0.5f);
 	
 	hitBlock = NULL;
 	blastDistance = MaxBlastDistance;
@@ -74,8 +77,6 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 			}
 		}
 	}
-
-	blastDistance = MaxBlastDistance;
 
 	return hasHits;
 }
