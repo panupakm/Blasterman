@@ -37,14 +37,9 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	FVector start = GetActorLocation();
 	FVector end = GetActorLocation() + dirRotator.Vector()*MaxBlastDistance;
 
-	//UE_LOG(LogTemp, Warning, TEXT("Actor Rotator(%s) Vector(%s) MaxBlastDistance(%f) BlastRadius(%f)"), *dirRotator.ToString(), *dirRotator.Vector().ToString(), MaxBlastDistance, BlastRadius);
-	//UE_LOG(LogTemp, Warning, TEXT("Start(%s) End(%s)"), *start.ToString(), *end.ToString());
-
 	FCollisionQueryParams queryParams = FCollisionQueryParams( "Blast", true, this);
 
-	TArray<TEnumAsByte<EObjectTypeQuery>> objectTypes;
-
-	FCollisionObjectQueryParams objectQueryParams = FCollisionObjectQueryParams( objectTypes );
+	FCollisionObjectQueryParams objectQueryParams = FCollisionObjectQueryParams(SweepObjectTypeQueries);
 	FCollisionShape collisionShape = FCollisionShape::MakeSphere(BlastRadius);
 
 	bool hasHits = false;
@@ -52,13 +47,16 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 		objectQueryParams, collisionShape, queryParams);
 	DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 0.5f);
 	
+	//UE_LOG(LogTemp, Warning, TEXT("000000000000000000-- Actor(%s) ---000000000000000000000"), *GetName());
 	hitBlock = NULL;
 	blastDistance = MaxBlastDistance;
 	for (int idx = 0; idx < outHits.Num(); ++idx) 
 	{
 		FHitResult & hitResult = outHits[idx];
+		//UE_LOG(LogTemp, Warning, TEXT("--------------- Hit %s"), *hitResult.GetActor()->GetName());
 		if (hitResult.GetActor()->IsA(ABombActor::StaticClass()))
 		{
+			//UE_LOG(LogTemp, Warning, TEXT("---------------Bomb Hit %s"), *hitResult.GetActor()->GetName());
 			hasHits = true;
 			hitBombs.Add( Cast<ABombActor>(hitResult.GetActor()));
 		}
@@ -67,7 +65,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 			hasHits = true;
 			hitPlayers.Add(Cast<ACharacter>(hitResult.GetActor()));
 		}
-		else if (hitResult.GetActor()->IsA(ABlockActor::StaticClass())) 
+		else if (hitResult.GetActor()->IsA(ABlockActor::StaticClass()))
 		{
 			if (blastDistance >= hitResult.Distance)
 			{
@@ -77,6 +75,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 			}
 		}
 	}
+	//UE_LOG(LogTemp, Warning, TEXT("-------- HitBombs(%d) HitPlayers(%d) "), hitBombs.Num(), hitPlayers.Num());
 
 	return hasHits;
 }

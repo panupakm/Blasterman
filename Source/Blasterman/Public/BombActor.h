@@ -18,15 +18,19 @@ public:
 	// Sets default values for this actor's properties
 	ABombActor();
 
-protected:
+private:
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = "BombActor")
-	float MaxBlastDistance;
+		float MaxBlastDistance;
 
 	UPROPERTY(EditAnywhere, Category = "BombActor")
-	float BlastRadius;
+		float BlastRadius;
+
+	UPROPERTY(EditAnywhere, Category = "BombActor")
+		TArray<TEnumAsByte<EObjectTypeQuery>> SweepObjectTypeQueries;
 
 	UFUNCTION(BlueprintCallable, Category = "BombActor")
 	UPARAM(DisplayName="HasHit") bool QueryBlastInfo(FRotator dirRotator, float & distance, TArray<ACharacter*> & hitPlayers, TArray<ABombActor*> & hitBombs, ABlockActor* & hitBlock);
