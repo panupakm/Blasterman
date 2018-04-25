@@ -24,6 +24,12 @@ public:
 	UFUNCTION()
 		void IncreaseRunSpeed(float speed);
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,7 +38,7 @@ protected:
 		float MaxBlastDistance = 300;
 
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
-		float RunSpeed = 1.0f;
+		float DefaultWalkSpeed = 600.0f;
 
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
 		int MaxBomb = 1;
@@ -40,12 +46,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
 		float BlastRadius = 30.0f;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
+		float MaxWalkSpeedRatio = 3.0f;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+private:
+	float CurrentWalkSpeedRatio = 1.0f;
 
-	
+
 };

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BlasterCharacter.h"
-
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ABlasterCharacter::ABlasterCharacter()
@@ -16,6 +16,8 @@ void ABlasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	UCharacterMovementComponent * charMovementComp = FindComponentByClass<UCharacterMovementComponent>();
+	charMovementComp->MaxWalkSpeed = DefaultWalkSpeed * CurrentWalkSpeedRatio;
 }
 
 // Called every frame
@@ -42,7 +44,11 @@ void ABlasterCharacter::IncreaseMaxBomb(int number)
 	MaxBomb += number;
 }
 
-void ABlasterCharacter::IncreaseRunSpeed(float speed)
+void ABlasterCharacter::IncreaseRunSpeed(float additiaonalSpeedRatio)
 {
+	UCharacterMovementComponent * charMovementComp = FindComponentByClass<UCharacterMovementComponent>();
+	CurrentWalkSpeedRatio += additiaonalSpeedRatio;
 
+	CurrentWalkSpeedRatio = FMath::Min<float>(CurrentWalkSpeedRatio, MaxWalkSpeedRatio);
+	charMovementComp->MaxWalkSpeed = DefaultWalkSpeed * CurrentWalkSpeedRatio;
 }
