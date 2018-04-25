@@ -26,7 +26,6 @@ void APowerUpActor::BeginPlay()
 
 
 void APowerUpActor::OnOverlappedWithActor(AActor* overlappedActor, AActor* otherActor) {
-	UE_LOG(LogTemp, Warning, TEXT("OnOverlappedWithActor"))
 
 	ABlasterCharacter* targetPlayer = Cast<ABlasterCharacter>(otherActor);
 	if (targetPlayer) 
@@ -34,7 +33,6 @@ void APowerUpActor::OnOverlappedWithActor(AActor* overlappedActor, AActor* other
 		targetPlayer->IncreaseBlastDistance( BlastRangeIncrease );
 		targetPlayer->IncreaseMaxBomb(BombIncrease);
 		targetPlayer->IncreaseRunSpeed(RunSpeedIncrease);
-
 		OnFinishedPowerUp();
 	}
 }
