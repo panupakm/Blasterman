@@ -33,6 +33,7 @@ void APowerUpActor::OnOverlappedWithActor(AActor* overlappedActor, AActor* other
 		targetPlayer->IncreaseBlastDistance( BlastRangeIncrease );
 		targetPlayer->IncreaseMaxBomb(BombIncrease);
 		targetPlayer->IncreaseRunSpeed(RunSpeedIncrease);
+		targetPlayer->ActivateRemoteBomb(RemoteDetonateDuration);
 		OnFinishedPowerUp();
 	}
 }

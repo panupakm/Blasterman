@@ -24,7 +24,11 @@ void ABlasterCharacter::BeginPlay()
 void ABlasterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (bRemoteBombActivated) 
+	{
+		CurrentRemoteLifeSpan -= DeltaTime;
+		bRemoteBombActivated = CurrentRemoteLifeSpan > 0.0f;
+	}
 }
 
 // Called to bind functionality to input
@@ -51,4 +55,13 @@ void ABlasterCharacter::IncreaseRunSpeed(float additiaonalSpeedRatio)
 
 	CurrentWalkSpeedRatio = FMath::Min<float>(CurrentWalkSpeedRatio, MaxWalkSpeedRatio);
 	charMovementComp->MaxWalkSpeed = DefaultWalkSpeed * CurrentWalkSpeedRatio;
+}
+
+void ABlasterCharacter::ActivateRemoteBomb(float duration) 
+{
+	if (duration > 0) 
+	{
+		bRemoteBombActivated = true;
+		CurrentRemoteLifeSpan = duration;
+	}
 }

@@ -33,9 +33,6 @@ protected:
 		float BombIncrease;
 	
 	UPROPERTY(EditAnywhere, Category = "PowerUp")
-		bool RemoteDetonate;
-
-	UPROPERTY(EditAnywhere, Category = "PowerUp")
 		float RemoteDetonateDuration;
 
 	UPROPERTY(EditAnywhere, Category = "PowerUp")

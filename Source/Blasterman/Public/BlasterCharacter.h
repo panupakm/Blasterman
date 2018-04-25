@@ -23,6 +23,9 @@ public:
 
 	UFUNCTION()
 		void IncreaseRunSpeed(float speed);
+	
+	UFUNCTION()
+		void ActivateRemoteBomb(float duration);
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -49,8 +52,10 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
 		float MaxWalkSpeedRatio = 3.0f;
 
+	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
+		bool bRemoteBombActivated = false;
 private:
 	float CurrentWalkSpeedRatio = 1.0f;
-
+	float CurrentRemoteLifeSpan = 0.0f;
 
 };
