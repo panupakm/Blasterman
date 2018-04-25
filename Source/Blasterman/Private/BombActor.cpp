@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BombActor.h"
-#include "BomberCharacter.h"
 #include "BlockActor.h"
+#include "BlasterCharacter.h"
+#include "PowerUpActor.h"
 #include "WorldCollision.h"
 #include "CollisionDebugDrawingPublic.h"
 
@@ -30,12 +31,12 @@ void ABombActor::Tick(float DeltaTime)
 
 }
 
-bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TArray<ACharacter*> & hitPlayers, TArray<ABombActor*> & hitBombs, ABlockActor* &hitBlock)
+bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TArray<ACharacter*> & hitPlayers, TArray<ABombActor*> & hitBombs, TArray<APowerUpActor*> & hitPowerups, ABlockActor* &hitBlock)
 {	
 	TArray<FHitResult> outHits;
 
-	FVector start = GetActorLocation();
-	FVector end = GetActorLocation() + dirRotator.Vector()*MaxBlastDistance;
+	FVector start = GetActorLocation() + FVector(0, 0, BlastRadius);;
+	FVector end = start + dirRotator.Vector()*MaxBlastDistance;
 
 	FCollisionQueryParams queryParams = FCollisionQueryParams( "Blast", false, this);
 
@@ -53,7 +54,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	for (int idx = 0; idx < outHits.Num(); ++idx) 
 	{
 		FHitResult & hitResult = outHits[idx];
-		//UE_LOG(LogTemp, Warning, TEXT("--------------- Hit %s"), *hitResult.GetActor()->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("--------------- Hit %s"), *hitResult.GetActor()->GetName());
 		if (hitResult.GetActor()->IsA(ABombActor::StaticClass()))
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("---------------Bomb Hit %s"), *hitResult.GetActor()->GetName());
@@ -76,6 +77,18 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 				blastDistance = hitResult.Distance;
 				hasHits = true;
 				hitBlock = Cast<ABlockActor>(hitResult.GetActor());
+			}
+		}
+		else if (hitResult.GetActor()->IsA(APowerUpActor::StaticClass()))
+		{
+			hasHits = true;
+			hitPowerups.Add(Cast<APowerUpActor>(hitResult.GetActor()));
+		}
+		else {
+			if (blastDistance >= hitResult.Distance)
+			{
+				blastDistance = hitResult.Distance;
+				hasHits = true;
 			}
 		}
 	}

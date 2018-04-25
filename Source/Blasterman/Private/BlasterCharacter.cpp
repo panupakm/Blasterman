@@ -32,3 +32,17 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 }
 
+void ABlasterCharacter::IncreaseBlastDistance(float distance) 
+{
+	MaxBlastDistance += distance;
+}
+
+void ABlasterCharacter::IncreaseMaxBomb(int number)
+{
+	MaxBomb += number;
+}
+
+void ABlasterCharacter::IncreaseRunSpeed(float speed)
+{
+
+}

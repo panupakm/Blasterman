@@ -23,17 +23,17 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = "BombActor")
+	UPROPERTY(BlueprintReadWrite, Category = "BombActor")
 		float MaxBlastDistance;
 
-	UPROPERTY(EditAnywhere, Category = "BombActor")
+	UPROPERTY(BlueprintReadWrite, Category = "BombActor")
 		float BlastRadius;
 
 	UPROPERTY(EditAnywhere, Category = "BombActor")
 		TArray<TEnumAsByte<EObjectTypeQuery>> SweepObjectTypeQueries;
 
 	UFUNCTION(BlueprintCallable, Category = "BombActor")
-	UPARAM(DisplayName="HasHit") bool QueryBlastInfo(FRotator dirRotator, float & distance, TArray<ACharacter*> & hitPlayers, TArray<ABombActor*> & hitBombs, ABlockActor* & hitBlock);
+	UPARAM(DisplayName="HasHit") bool QueryBlastInfo(FRotator dirRotator, float & distance, TArray<ACharacter*> & hitPlayers, TArray<ABombActor*> & hitBombs, TArray<APowerUpActor*> & hitPowerups, ABlockActor* & hitBlock);
 
 public:	
 	// Called every frame

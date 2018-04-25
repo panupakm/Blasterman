@@ -15,9 +15,30 @@ public:
 	// Sets default values for this character's properties
 	ABlasterCharacter();
 
+	UFUNCTION()
+		void IncreaseBlastDistance(float distance);
+
+	UFUNCTION()
+		void IncreaseMaxBomb(int number);
+
+	UFUNCTION()
+		void IncreaseRunSpeed(float speed);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
+		float MaxBlastDistance;
+
+	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
+		float RunSpeed;
+
+	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
+		float MaxBomb;
+
+	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
+		float BlastRadius;
 
 public:	
 	// Called every frame
@@ -26,6 +47,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
 	
 };
