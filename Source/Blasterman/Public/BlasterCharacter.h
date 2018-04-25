@@ -29,16 +29,16 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
-		float MaxBlastDistance;
+		float MaxBlastDistance = 300;
 
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
-		float RunSpeed;
+		float RunSpeed = 1.0f;
 
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
-		float MaxBomb;
+		int MaxBomb = 1;
 
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
-		float BlastRadius;
+		float BlastRadius = 30.0f;
 
 public:	
 	// Called every frame
