@@ -18,7 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	ABombActor();
 
-private:
+protected:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

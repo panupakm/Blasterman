@@ -37,7 +37,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	FVector start = GetActorLocation();
 	FVector end = GetActorLocation() + dirRotator.Vector()*MaxBlastDistance;
 
-	FCollisionQueryParams queryParams = FCollisionQueryParams( "Blast", true, this);
+	FCollisionQueryParams queryParams = FCollisionQueryParams( "Blast", false, this);
 
 	FCollisionObjectQueryParams objectQueryParams = FCollisionObjectQueryParams(SweepObjectTypeQueries);
 	FCollisionShape collisionShape = FCollisionShape::MakeSphere(BlastRadius);
@@ -45,7 +45,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	bool hasHits = false;
 	GetWorld()->SweepMultiByObjectType(outHits, start, end, FQuat(0, 0, 0, 1), 
 		objectQueryParams, collisionShape, queryParams);
-	DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 0.5f);
+	DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 3.0f);
 	
 	//UE_LOG(LogTemp, Warning, TEXT("000000000000000000-- Actor(%s) ---000000000000000000000"), *GetName());
 	hitBlock = NULL;
@@ -63,7 +63,11 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 		else if (hitResult.GetActor()->IsA(ACharacter::StaticClass())) 
 		{
 			hasHits = true;
-			hitPlayers.Add(Cast<ACharacter>(hitResult.GetActor()));
+			ACharacter* hitCharacter = Cast<ACharacter>(hitResult.GetActor());
+			if (!hitPlayers.Contains(hitCharacter)) 
+			{
+				hitPlayers.Add(Cast<ACharacter>(hitResult.GetActor()));
+			}			
 		}
 		else if (hitResult.GetActor()->IsA(ABlockActor::StaticClass()))
 		{
@@ -75,7 +79,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 			}
 		}
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("-------- HitBombs(%d) HitPlayers(%d) "), hitBombs.Num(), hitPlayers.Num());
+	//UE_LOG(LogTemp, Warning, TEXT("-------- HitBombs(%d) HitPlayers(%d) OutHit(%d)"), hitBombs.Num(), hitPlayers.Num(), outHits.Num());
 
 	return hasHits;
 }
