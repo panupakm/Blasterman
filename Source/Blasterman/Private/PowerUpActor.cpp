@@ -43,6 +43,11 @@ void APowerUpActor::OnFinishedPowerUp_Implementation()
 
 }
 
+void APowerUpActor::OnRemotePowerUpExpired_Implementation()
+{
+
+}
+
 // Called every frame
 void APowerUpActor::Tick(float DeltaTime)
 {

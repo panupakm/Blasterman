@@ -28,6 +28,9 @@ void ABlasterCharacter::Tick(float DeltaTime)
 	{
 		CurrentRemoteLifeSpan -= DeltaTime;
 		bRemoteBombActivated = CurrentRemoteLifeSpan > 0.0f;
+		if (!bRemoteBombActivated) {
+			OnRemotePowerUpExpired();
+		}
 	}
 }
 
@@ -64,4 +67,8 @@ void ABlasterCharacter::ActivateRemoteBomb(float duration)
 		bRemoteBombActivated = true;
 		CurrentRemoteLifeSpan = duration;
 	}
+}
+
+void ABlasterCharacter::OnRemotePowerUpExpired_Implementation() {
+
 }

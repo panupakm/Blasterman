@@ -25,6 +25,8 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "PowerUp")
 		void OnFinishedPowerUp();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "PowerUp")
+		void OnRemotePowerUpExpired();
 
 	UPROPERTY(EditAnywhere, Category = "PowerUp")
 		float BlastRangeIncrease;

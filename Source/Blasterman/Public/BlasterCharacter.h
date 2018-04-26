@@ -37,6 +37,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "BlasterMan")
+		void OnRemotePowerUpExpired();
+
 	UPROPERTY(BlueprintReadOnly, Category = "BlasterMan", EditAnywhere)
 		float MaxBlastDistance = 300;
 
