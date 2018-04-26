@@ -72,3 +72,7 @@ void ABlasterCharacter::ActivateRemoteBomb(float duration)
 void ABlasterCharacter::OnRemotePowerUpExpired_Implementation() {
 
 }
+
+float ABlasterCharacter::GetCurrentRemoteLifepsan() {
+	return FMath::Max(0.0f, CurrentRemoteLifeSpan);
+}
