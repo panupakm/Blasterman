@@ -46,7 +46,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	bool hasHits = false;
 	GetWorld()->SweepMultiByObjectType(outHits, start, end, FQuat(0, 0, 0, 1), 
 		objectQueryParams, collisionShape, queryParams);
-	DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 3.0f);
+	//DrawSphereSweeps(GetWorld(), start, end, BlastRadius, outHits, 3.0f);
 	
 	//UE_LOG(LogTemp, Warning, TEXT("000000000000000000-- Actor(%s) ---000000000000000000000"), *GetName());
 	hitBlock = NULL;
@@ -54,7 +54,7 @@ bool ABombActor::QueryBlastInfo( FRotator dirRotator, float & blastDistance, TAr
 	for (int idx = 0; idx < outHits.Num(); ++idx) 
 	{
 		FHitResult & hitResult = outHits[idx];
-		UE_LOG(LogTemp, Warning, TEXT("--------------- Hit %s"), *hitResult.GetActor()->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("--------------- Hit %s"), *hitResult.GetActor()->GetName());
 		if (hitResult.GetActor()->IsA(ABombActor::StaticClass()))
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("---------------Bomb Hit %s"), *hitResult.GetActor()->GetName());
